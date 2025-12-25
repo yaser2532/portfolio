@@ -44,6 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    // message me 
+    /* --- Secret Lamp Logic --- */
+const secretDeskSection = document.getElementById('secret-desk');
+const lampSwitch = document.getElementById('lamp-toggle');
+
+if (secretDeskSection && lampSwitch) {
+    lampSwitch.checked = false;
+    secretDeskSection.classList.remove('is-lit');
+
+    lampSwitch.addEventListener('change', () => {
+        secretDeskSection.classList.toggle('is-lit');
+    });
+}
 
     /* --- 4. Intersection Observer for Scroll Animations --- */
     const observerOptions = {

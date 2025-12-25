@@ -462,6 +462,277 @@ header h1 {
     font-weight: 600;
 }
 
+/* message me */
+/* --- SECRET DESK SECTION (SEPARATED LAYOUT) --- */
+#secret-desk {
+    background-color: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+    min-height: 90vh; /* Huge section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.5s ease;
+    padding: 0 !important;
+}
+
+.desk-layout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* We use grid/flex only for centering the lamp, switch is absolute */
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+/* --- 1. The Switch (Left Wall Position) --- */
+.switch-container {
+    position: absolute;
+    /* Move to the left side */
+    left: 10%; 
+    top: 50%;
+    transform: translateY(-50%);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    z-index: 20;
+    
+    /* Add a subtle "wall plate" look */
+    padding: 0.5rem;
+    background: rgb(0, 0, 0);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.425);
+}
+
+.modern-switch {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.modern-switch input { opacity: 0; width: 0; height: 0; }
+
+.switch-track {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #333;
+    border-radius: 40px;
+    transition: background-color 0.4s;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.switch-thumb {
+    position: absolute;
+    height: 32px; width: 32px;
+    left: 4px; bottom: 4px;
+    background-color: #666;
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.modern-switch input:checked + .switch-track { background-color: var(--accent-color); }
+.modern-switch input:checked + .switch-track .switch-thumb { transform: translateX(40px); background-color: white; }
+
+.switch-label-modern {
+    font-size: 0.8rem;
+    font-family: monospace;
+    color: #666;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* --- 2. The Lamp Scene (Center Position) --- */
+.lamp-scene {
+    position: relative;
+    width: 19rem;
+    height: 26rem; /* Tall to accommodate cord */
+    display: flex;
+    justify-content: center;
+    transform: scale(1.4); /* Make it large */
+    transform-origin: top center;
+    /* Pushing it slightly up so the light hits the middle */
+    margin-top: -4rem; 
+}
+
+.lamp-structure {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lamp-structure::before { /* The Cord */
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    width: 4px;
+    height: 100vh; /* Very long cord going off screen */
+    background-color: #111;
+}
+
+.lamp-shade {
+    width: 7rem;
+    height: 6rem;
+    background: linear-gradient(to right, #222, #000);
+    border-radius: 40px 40px 10px 10px;
+    position: relative;
+    z-index: 11;
+    box-shadow: 0 -5px 10px rgba(0,0,0,0.5);
+}
+
+.lamp-bulb {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #2a2a2a;
+    border-radius: 50%;
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: background-color 0.2s;
+    z-index: 9;
+}
+
+/* --- 3. Blurred Light Visuals --- */
+.light-beam-visual {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-bottom: 450px solid rgba(255, 220, 246, 0);
+    
+    filter: blur(25px); /* Heavy Blur */
+    transition: border-bottom-color 0.5s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.light-floor-reflection {
+    position: absolute;
+    bottom: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 80px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 220, 0.0) 0%, transparent 70%);
+    filter: blur(20px);
+    transition: background 0.5s ease;
+    z-index: 4;
+}
+
+/* --- 4. Content Wrapper --- */
+.desk-content-wrapper {
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    text-align: center;
+    width: 250px;
+    z-index: 15;
+    
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.5s ease 0.1s;
+}
+
+.secret-text {
+    font-size: 1rem;
+    color: #111;
+    margin-bottom: 20px;
+    font-weight: 650;
+}
+
+.message-btn {
+    display: inline-block;
+    padding: 14px 35px;
+    background-color: #1a1a1a;
+    color: var(--accent-hover);
+    font-weight: 800;
+    border-radius: 50px;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    pointer-events: auto;
+}
+
+.message-btn:hover {
+    transform: scale(1.1);
+    border: 2px solid  var(--accent-hover);
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* --- 5. Activation States (.is-lit) --- */
+
+#secret-desk.is-lit .lamp-bulb {
+    background-color: #fff8e1;
+    box-shadow: 0 0 30px #fff8e1;
+}
+
+#secret-desk.is-lit .light-beam-visual {
+    border-bottom-color: rgba(255, 246, 220, 0.25);
+}
+
+#secret-desk.is-lit .light-floor-reflection {
+    background: radial-gradient(ellipse at center, rgba(255, 246, 220, 0.4) 0%, transparent 70%);
+}
+
+#secret-desk.is-lit .desk-content-wrapper {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 992px) {
+    /* On Tablets: Switch moves closer */
+    .switch-container {
+        left: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    /* On Mobile: Stack them back vertically because width is too small for side-by-side */
+    .desk-layout {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 50px;
+    }
+
+    .switch-container {
+        position: relative; /* Not absolute anymore */
+        left: auto;
+        top: auto;
+        transform: none;
+        margin-bottom: 3rem;
+    }
+    
+    .lamp-scene {
+        transform: scale(0.9);
+        margin-top: 0;
+        height: 500px;
+    }
+    
+    /* Shorten cord on mobile */
+    .lamp-structure::before {
+        height: 100px;
+        top: -100px;
+        bottom: auto;
+    }
+}
 /* --- Footer --- */
 footer {
     background-color: #0f0f0f;
@@ -495,6 +766,12 @@ footer {
 .social-links {
     display: flex;
     gap: 1.5rem;
+}
+@media (max-width: 375px) {
+    .social-links {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .social-links a {
