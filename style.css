@@ -104,7 +104,7 @@ nav {
     width: 100%;
     z-index: 1000;
     transition: background-color 0.4s ease, padding 0.4s ease;
-    padding: 1.5rem 0;
+    padding: 0.5rem 0;
     background-color: var(--nav-bg);
     backdrop-filter: blur(8px);
     border-bottom-left-radius: var(--radius-soft);
