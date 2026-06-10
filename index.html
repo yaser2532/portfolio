@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="AI & Cloud Development Portfolio">
     <title>AI & Cloud Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- Optional: Font Awesome for Icons if desired, using text placeholders per requirement -->
 </head>
@@ -16,10 +19,11 @@
             <div class="logo">Dev.AI</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#profile-expertise">Profile</a></li>
                 <li><a href="#about-me">About Me</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#certificates">Certificates</a></li> <!-- NEW LINK -->
+                <li><a href="#certificates">Certificates</a></li> 
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="burger">
@@ -33,15 +37,84 @@
     <!-- Header / Hero Section -->
     <header id="home">
         <div class="overlay"></div>
-        <div class="header-content fade-in-section">
-            <div class="profile-img-container">
-                <img src="g-img.png" alt="Developer Profile" class="profile-img">
+        <div class="header-content">
+            <h1 class="hero-title"><span id="tp-name"></span><span id="name-cursor" class="typing-cursor"></span></h1>
+            <h2 class="hero-subtitle"><span id="tp-subtitle"></span><span id="subtitle-cursor" class="typing-cursor hidden"></span></h2>
+            
+            <div id="hero-details" class="hero-details-container">
+                <!-- Small About Me Tile -->
+                <div class="hero-about-tile">
+                    <p><span id="tp-about"></span><span id="about-cursor" class="typing-cursor hidden"></span></p>
+                </div>
+                
+                <!-- Special Traits -->
+                <div class="hero-traits-list">
+                    <span class="trait-tag">Advanced SQL</span>
+                    <span class="trait-tag">Data Storytelling</span>
+                    <span class="trait-tag">Python & AI Workflow</span>
+                    <span class="trait-tag">High-Velocity Execution</span>
+                </div>
             </div>
-            <h1>AI Inspired Full-stack Developer</h1>
-            <p class="subtitle">Building intelligent, scalable systems on the Web with reliable frameworks.</p>
-            <a href="#projects" class="cta-button">View My Work</a>
+            
+            <div class="hero-actions">
+                <a href="#profile-expertise" class="cta-button">Explore My Work</a>
+            </div>
         </div>
     </header>
+
+    <!-- Profile & Detailed Expertise Section -->
+    <section id="profile-expertise" class="section-padding fade-in-section">
+        <div class="container">
+            <h2 class="section-title">Profile & Expertise</h2>
+            <p class="section-intro">Bridging data science and artificial intelligence to build modern, high-velocity solutions.</p>
+            
+            <div class="profile-grid">
+                <!-- Profile Image Side -->
+                <div class="profile-showcase">
+                    <div class="profile-card-wrapper">
+                        <img src="g-img.png" alt="Yaser Husen Profile" class="profile-details-img">
+                        <div class="profile-card-glow"></div>
+                    </div>
+                </div>
+                
+                <!-- Expertise Grid Side -->
+                <div class="expertise-showcase">
+                    <h3 class="expertise-title-accent">Core Focus Areas</h3>
+                    <div class="expertise-cards-grid">
+                        
+                        <!-- Card 1: Data Analysis -->
+                        <div class="expertise-card">
+                            <div class="expertise-icon">📊</div>
+                            <h4>Data Analysis</h4>
+                            <p>Uncovering trends, cleaning complex datasets, and applying statistical models to drive actionable business decisions.</p>
+                        </div>
+                        
+                        <!-- Card 2: Data Storytelling -->
+                        <div class="expertise-card">
+                            <div class="expertise-icon">📖</div>
+                            <h4>Data Storytelling</h4>
+                            <p>Translating analytical findings into visually striking dashboards and clear narratives that align stakeholders.</p>
+                        </div>
+                        
+                        <!-- Card 3: Advanced SQL -->
+                        <div class="expertise-card">
+                            <div class="expertise-icon">🗄️</div>
+                            <h4>Advanced SQL</h4>
+                            <p>Writing highly optimized queries, building indexing strategies, and managing complex schema designs for high performance.</p>
+                        </div>
+                        
+                        <!-- Card 4: Python & AI Integration -->
+                        <div class="expertise-card">
+                            <div class="expertise-icon">🤖</div>
+                            <h4>Python AI Integration</h4>
+                            <p>Deploying Large Language Models (LLMs), designing prompt pipelines, and embedding custom agents directly into Python workflows.</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- About Me Section -->
     <section id="about-me" class="section-padding fade-in-section">
@@ -67,10 +140,11 @@
                     <div class="code-block-visual">
                         <code>
                             <span class="keyword">const</span> <span class="var">skills</span> = [<br>
-                            &nbsp;&nbsp;'Bilingual/Native-level English',<br>
-                            &nbsp;&nbsp;'Python & JavaScript',<br>
-                            &nbsp;&nbsp;'Full-stack Development',<br>
-                            &nbsp;&nbsp;'Team working',<br>
+                             &nbsp;&nbsp;'Bilingual/Native-level English',<br>
+                             &nbsp;&nbsp;'Python & JavaScript',<br>
+                             &nbsp;&nbsp;'Data Analysis',<br>
+                             &nbsp;&nbsp;'Full-stack Development',<br>
+                             &nbsp;&nbsp;'Team working',<br>
                             &nbsp;&nbsp;'Vertex AI',<br>
                             &nbsp;&nbsp;'LLM Fine-tuning',<br>
                             &nbsp;&nbsp;'Cloud Architecture'<br>
