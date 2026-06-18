@@ -129,7 +129,7 @@ if (secretDeskSection && lampSwitch) {
         if (aboutEl && aboutCursor) {
             aboutCursor.classList.remove('hidden');
             await typeText(aboutEl, "I leverage Advanced SQL, Python, and AI to build scalable solutions with speed and precision.", 65);
-            // Keep the aboutCursor visible so it continues to blink after sentence completion
+            // Keep the aboutCursor visible so it continues to blink after sentence completion yeah nice right 
         }
     }
 
