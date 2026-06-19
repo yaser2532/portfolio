@@ -67,15 +67,133 @@ function getDefaultNote(name) {
 // ─── DOM Elements & Initialization ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     
-    /* --- 1. Mouse Glow Effect --- */
+    /* --- 1. Upgraded Mouse Glow and Cluster Tracker --- */
     const mouseGlow = document.getElementById('mouse-glow');
-    if (mouseGlow) {
-        document.addEventListener('mousemove', (e) => {
-            window.requestAnimationFrame(() => {
-                mouseGlow.style.left = `${e.clientX}px`;
-                mouseGlow.style.top = `${e.clientY}px`;
-            });
+    const isHoverSupported = window.matchMedia('(hover: hover)').matches;
+
+    if (mouseGlow && isHoverSupported) {
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let currentX = targetX;
+        let currentY = targetY;
+        const ease = 0.08;
+        let targetScale = 1;
+        let currentScale = 1;
+        let isVisible = false;
+
+        // Position initial offscreen
+        mouseGlow.style.opacity = '0';
+
+        // Pre-resolve root font size for rem conversions and handle resize
+        let rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        window.addEventListener('resize', () => {
+            rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
         });
+
+        // Create a pool of 8 colored gradient dots
+        const NUM_DOTS = 8;
+        const dots = [];
+        const dotsData = [];
+
+        for (let i = 0; i < NUM_DOTS; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'mouse-tracker-dot';
+            document.body.appendChild(dot);
+            dots.push(dot);
+
+            // Establish random directional angles and offset distances to form an organic cluster
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 8 + Math.random() * 14; // spread radius in px (approx. 0.5rem - 1.375rem)
+            
+            dotsData.push({
+                currentX: targetX,
+                currentY: targetY,
+                // Randomized ease to make the cluster stretch organically during movement
+                ease: 0.05 + Math.random() * 0.05, 
+                // Base static offsets from the cursor
+                dx: Math.cos(angle) * distance,
+                dy: Math.sin(angle) * distance,
+                // Swarm breathing parameters (sine/cosine offsets)
+                freqX: 1.2 + Math.random() * 1.8,
+                freqY: 1.2 + Math.random() * 1.8,
+                ampX: 3 + Math.random() * 5,
+                ampY: 3 + Math.random() * 5,
+                phaseX: Math.random() * Math.PI * 2,
+                phaseY: Math.random() * Math.PI * 2
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+            if (!isVisible) {
+                isVisible = true;
+                mouseGlow.style.opacity = '1';
+                dots.forEach(dot => dot.classList.add('active'));
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            mouseGlow.style.opacity = '0';
+            dots.forEach(dot => dot.classList.remove('active'));
+            isVisible = false;
+        });
+
+        // Hover tracking using event delegation
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target;
+            if (target && target.closest('a, button, .glass-card, .skill-tag, .modern-switch, .project-card, .cert-card')) {
+                targetScale = 1.35;
+            }
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            const target = e.target;
+            if (target && target.closest('a, button, .glass-card, .skill-tag, .modern-switch, .project-card, .cert-card')) {
+                targetScale = 1.0;
+            }
+        });
+
+        function animateGlow() {
+            // Update main background glow
+            currentX += (targetX - currentX) * ease;
+            currentY += (targetY - currentY) * ease;
+            currentScale += (targetScale - currentScale) * 0.15;
+            
+            // Convert positions to rem
+            const glowXRem = currentX / rootFontSize;
+            const glowYRem = currentY / rootFontSize;
+            mouseGlow.style.transform = `translate3d(${glowXRem}rem, ${glowYRem}rem, 0) translate(-50%, -50%) scale(${currentScale})`;
+            
+            // Update individual dots in the cluster
+            const time = Date.now() * 0.001; // Smooth constant oscillation time scale
+            
+            for (let i = 0; i < NUM_DOTS; i++) {
+                const dot = dots[i];
+                const data = dotsData[i];
+                
+                // Swarming drift offset calculation (makes the cluster breathe naturally)
+                const driftX = Math.sin(time * data.freqX + data.phaseX) * data.ampX;
+                const driftY = Math.cos(time * data.freqY + data.phaseY) * data.ampY;
+                
+                // Target position is cursor + static cluster offset + dynamic swarm drift
+                const targetDotX = targetX + data.dx + driftX;
+                const targetDotY = targetY + data.dy + driftY;
+                
+                // Interpolate position toward target
+                data.currentX += (targetDotX - data.currentX) * data.ease;
+                data.currentY += (targetDotY - data.currentY) * data.ease;
+                
+                // Convert coordinates to rem for clean rendering
+                const dotXRem = data.currentX / rootFontSize;
+                const dotYRem = data.currentY / rootFontSize;
+                
+                dot.style.transform = `translate3d(${dotXRem}rem, ${dotYRem}rem, 0) translate(-50%, -50%) scale(${currentScale})`;
+            }
+            
+            requestAnimationFrame(animateGlow);
+        }
+        requestAnimationFrame(animateGlow);
     }
 
     /* --- 2. Navbar Scroll and Active tracking --- */
