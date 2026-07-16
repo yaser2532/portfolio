@@ -276,27 +276,38 @@ button, input, textarea {
    ========================================================================== */
 .scroll-reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    will-change: opacity, transform;
+    transform: translate3d(0, 32px, 0) scale(0.985);
+    filter: blur(6px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s ease;
+    will-change: opacity, transform, filter;
 }
 
 .scroll-reveal.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
 }
 
 .fade-left {
-    transform: translateX(-40px);
+    transform: translate3d(-40px, 0, 0) scale(0.985);
 }
 
 .fade-right {
-    transform: translateX(40px);
+    transform: translate3d(40px, 0, 0) scale(0.985);
 }
 
 .scroll-reveal.fade-left.active,
 .scroll-reveal.fade-right.active {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+        transition: none;
+        transform: none !important;
+        filter: none;
+        opacity: 1;
+    }
 }
 
 /* ==========================================================================
@@ -2869,20 +2880,64 @@ footer {
     :root {
         --spacing-section: 4rem;
     }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section-padding {
+        padding: 4.25rem 0;
+    }
+
     .section-header {
-        margin-bottom: 3rem;
+        margin-bottom: 2.75rem;
     }
+
     .section-title {
-        font-size: 2rem;
+        font-size: 1.95rem;
     }
+
+    .section-desc {
+        font-size: 1rem;
+    }
+
     .hero-title {
-        font-size: 3rem;
-        min-height: 4rem;
+        font-size: 2.85rem;
+        min-height: 3.75rem;
+        line-height: 1.05;
     }
+
     .hero-subtitle {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
-    
+
+    .cta-button {
+        width: 100%;
+        max-width: 18rem;
+        padding: 13px 24px;
+        font-size: 1rem;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    .nav-links {
+        top: 4.25rem;
+        right: 0.75rem;
+        width: min(92vw, 20rem);
+        border-radius: 18px;
+        padding: 1rem 0;
+        background: rgba(3, 4, 8, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-links a {
+        padding: 0.7rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
     .profile-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -3005,16 +3060,40 @@ footer {
     :root {
         --spacing-section: 3rem;
     }
+
     .section-header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 2.25rem;
     }
+
     .hero-title {
         font-size: 2rem;
         min-height: 2.8rem;
         margin-top: 4rem;
+        line-height: 1.1;
     }
+
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
+    }
+
+    .hero-actions {
+        width: 100%;
+    }
+
+    .cta-button {
+        max-width: none;
+    }
+
+    .logo {
+        font-size: 1.15rem;
+    }
+
+    .nav-links {
+        top: 3.85rem;
+        right: 0.5rem;
+        width: calc(100vw - 1rem);
+        padding: 0.85rem 0;
+        gap: 0.45rem;
     }
     .input-group-grid {
         grid-template-columns: 1fr;

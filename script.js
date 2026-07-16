@@ -365,20 +365,32 @@ document.addEventListener('DOMContentLoaded', () => {
         animatedStats = true;
     }
 
-    const revealElements = document.querySelectorAll('.scroll-reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                if (entry.target.classList.contains('section-padding') && entry.target.id === 'about-me') {
-                    animateCounters();
-                }
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12 });
+    const revealElements = Array.from(document.querySelectorAll('.scroll-reveal'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add('active'));
+    } else {
+        revealElements.forEach((el, index) => {
+            const delay = Math.min(index * 90, 300);
+            el.style.transitionDelay = `${delay}ms`;
+            el.style.transitionDuration = '900ms';
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.classList.contains('section-padding') && entry.target.id === 'about-me') {
+                        animateCounters();
+                    }
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    }
 
     /* --- 7. Typewriter Sequence --- */
     function typeText(element, text, speed) {
