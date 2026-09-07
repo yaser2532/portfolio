@@ -133,6 +133,11 @@ button, input, textarea {
     opacity: 0.9;
 }
 
+body.cursor-reading .mouse-glow,
+body.cursor-reading .mouse-tracker-dot {
+    opacity: 0 !important;
+}
+
 /* Multi-colored gradients matching the dark/purple/turquoise theme */
 .mouse-tracker-dot:nth-child(4n+1) {
     background: linear-gradient(135deg, var(--accent-color) 0%, #3b83f6c9 50%, var(--accent-hover) 100%);

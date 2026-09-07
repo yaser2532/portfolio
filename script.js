@@ -134,6 +134,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.addEventListener('mouseleave', () => {
+
+    const readableSelector = [
+      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'li', 'a', 'button',
+      'label', 'input', 'textarea', 'select', '[role="button"]',
+      '.section-tag', '.trait-tag', '.skill-tag', '.badge', '.status-txt',
+      '.project-card', '.cert-card', '.glass-card'
+    ].join(', ');
+
+    function updateReadingState(event) {
+      const hoveredTarget = event.type === 'mouseout' ? event.relatedTarget : event.target;
+      const readableElement = hoveredTarget instanceof Element
+        ? hoveredTarget.closest(readableSelector)
+        : null;
+      const relatedReadableElement = event.relatedTarget instanceof Element
+        ? event.relatedTarget.closest(readableSelector)
+        : null;
+
+      if (event.type === 'mouseover' && readableElement === relatedReadableElement) return;
+      document.body.classList.toggle('cursor-reading', Boolean(readableElement));
+    }
+
+    document.addEventListener('mouseover', updateReadingState);
+    document.addEventListener('mouseout', updateReadingState);
             mouseGlow.style.opacity = '0';
             dots.forEach(dot => dot.classList.remove('active'));
             isVisible = false;
